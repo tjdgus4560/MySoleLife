@@ -3,13 +3,21 @@ package com.example.mysolelife.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.mysolelife.MainActivity
 import com.example.mysolelife.R
 import com.example.mysolelife.databinding.ActivityIntroBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class IntroActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityIntroBinding
+
+    private lateinit var auth :FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -17,6 +25,8 @@ class IntroActivity : AppCompatActivity() {
        // setContentView(R.layout.activity_intro)
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_intro)
+
+        auth = Firebase.auth
 
         binding.loginBtn.setOnClickListener{
             val intent = Intent(this,LoginActivity::class.java)
@@ -27,7 +37,19 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.noAccountBtn.setOnClickListener{
-            val intent = Intent(this,LoginActivity::class.java)
+
+            auth.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                       val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                    } else {
+                        Toast.makeText(this,"성공",Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             startActivity(intent)
         }
     }

@@ -36,6 +36,7 @@
                 android:layout_height="50dp"
                 android:hint="email"
                 style="@style/AuthEditText"
+                android:inputType="textEmailAddress"
                 />
 
 

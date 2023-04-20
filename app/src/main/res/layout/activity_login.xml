@@ -30,6 +30,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:inputType="textEmailAddress"
                 android:id="@+id/emailArea"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -3,6 +3,7 @@ package com.example.mysolelife.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.mysolelife.MainActivity
@@ -27,27 +28,29 @@ class LoginActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
         binding.loginBtn.setOnClickListener{
-            val email = binding.emailArea.text.toString().trim()
-            val password = binding.passwordArea.text.toString().trim()
+            val email = binding.emailArea.text.toString()
+            val password = binding.passwordArea.text.toString()
 
-            auth.signInWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword("12@123.com", "123123")
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        Toast.makeText(this,"성공",Toast.LENGTH_SHORT).show()
+
                         val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
-                        Toast.makeText(this,"로그인 성공", Toast.LENGTH_SHORT).show()
                     } else {
-
-                        Toast.makeText(this,password, Toast.LENGTH_SHORT).show()
-
+                        val exception = task.exception
+                        exception?.let {
+                            Log.e("LoginActivity", "로그인 실패: ${it.message}")
+                            Toast.makeText(this, "로그인 실패: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
         }
 
 
     }
-
 
 }

@@ -3,6 +3,7 @@ package com.example.mysolelife.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.mysolelife.MainActivity
@@ -30,8 +31,8 @@ class JoinActivity : AppCompatActivity() {
             var isGoToJoin = true
 
             val email = binding.emailArea.text.toString()
-            val password1 = binding.passwordArea1.toString()
-            val password2 = binding.passwordArea2.toString()
+            val password1 = binding.passwordArea1.text.toString()
+            val password2 = binding.passwordArea2.text.toString()
 
             auth = Firebase.auth
 
@@ -52,7 +53,7 @@ class JoinActivity : AppCompatActivity() {
             }
 
             //비밀번호가 두개가 같은지 확인
-            if(password1.equals(password2)){
+            if(!password1.equals(password2)){
                 Toast.makeText(this,"비밀번호를 똑같이 입력해 주세요",Toast.LENGTH_SHORT).show()
                 isGoToJoin = false
             }
@@ -67,7 +68,7 @@ class JoinActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email, password1)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(this,"성공",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,password1,Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
@@ -78,8 +79,6 @@ class JoinActivity : AppCompatActivity() {
                     }
 
         }
-
-
 
     }
 
