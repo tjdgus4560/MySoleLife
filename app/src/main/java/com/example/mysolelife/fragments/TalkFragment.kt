@@ -67,38 +67,38 @@ class TalkFragment : Fragment() {
         return binding.root
     }
 
-    private fun getFBBoardData(){
-
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                boardDataList.clear()
-
-                for (dataModel in dataSnapshot.children) {
-
-                    Log.d(TAG, dataModel.toString())
-//                    dataModel.key
-
-                    val item = dataModel.getValue(BoardModel::class.java)
-                    boardDataList.add(item!!)
-                    boardKeyList.add(dataModel.key.toString())
-
-                }
-                boardKeyList.reverse()
-                boardDataList.reverse()
-                boardRVAdapter.notifyDataSetChanged()
-
-                Log.d(TAG, boardDataList.toString())
-
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        FBRef.boardRef.addValueEventListener(postListener)
-
-    }
+//    private fun getFBBoardData(){
+//
+//        val postListener = object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//
+//                boardDataList.clear()
+//
+//                for (dataModel in dataSnapshot.children) {
+//
+//                    Log.d(TAG, dataModel.toString())
+////                    dataModel.key
+//
+//                    val item = dataModel.getValue(BoardModel::class.java)
+//                    boardDataList.add(item!!)
+//                    boardKeyList.add(dataModel.key.toString())
+//
+//                }
+//                boardKeyList.reverse()
+//                boardDataList.reverse()
+//                boardRVAdapter.notifyDataSetChanged()
+//
+//                Log.d(TAG, boardDataList.toString())
+//
+//
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+//            }
+//        }
+//        FBRef.boardRef.addValueEventListener(postListener)
+//
+//    }
 }
