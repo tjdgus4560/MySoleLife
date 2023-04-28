@@ -3,6 +3,7 @@ package com.example.mysolelife.board
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.mysolelife.R
 import com.example.mysolelife.contentsList.BookmarkModel
@@ -36,6 +37,8 @@ class BoardWriteActivity : AppCompatActivity() {
             FBRef.boardRef
                 .push()
                 .setValue(BoardModel(title, content, uid, time))
+
+            Toast.makeText(this,"게시글 입력 완료",Toast.LENGTH_SHORT).show()
 
         }
 

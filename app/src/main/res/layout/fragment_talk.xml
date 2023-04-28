@@ -8,34 +8,30 @@
         tools:context=".fragments.TalkFragment">
 
         <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="50sp"
-            android:text="토크" />
-
-
-
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/boardListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="70dp"/>
 
             <ImageView
                 android:id="@+id/writeBtn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/btnwrite"
-                android:layout_marginBottom="70dp"
-                android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="90dp"
+                android:layout_marginRight="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/mainColor"/>
+                    android:background="@color/mainColor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,7 +62,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/white"
@@ -107,8 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:src="@drawable/bottom_store" />
-            </LinearLayout>
 
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
