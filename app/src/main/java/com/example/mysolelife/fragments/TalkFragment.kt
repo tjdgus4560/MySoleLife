@@ -13,6 +13,7 @@ import com.example.mysolelife.R
 import com.example.mysolelife.board.BoardListLVAdapter
 import com.example.mysolelife.board.BoardModel
 import com.example.mysolelife.board.BoardWriteActivity
+import com.example.mysolelife.contentsList.BookmarkRVAdapter
 import com.example.mysolelife.databinding.FragmentHomeBinding
 import com.example.mysolelife.databinding.FragmentTalkBinding
 import com.example.mysolelife.utils.FBRef
@@ -27,6 +28,9 @@ class TalkFragment : Fragment() {
     private var TAG = TalkFragment::class.java.simpleName
 
     private val boardDataList = mutableListOf<BoardModel>()
+    //private val boardKeyList = mutableListOf<>()
+
+    private lateinit var boardRVAdapter : BoardListLVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +44,11 @@ class TalkFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_talk, container, false)
 
-        val boardList = mutableListOf<BoardModel>()
-        boardList.add(BoardModel("a","B","c","d"))
+//        val boardList = mutableListOf<BoardModel>()
+//        boardList.add(BoardModel("a","B","c","d"))
 
-        val boardRVadapter = BoardListLVAdapter(boardList)
-        binding.boardListView.adapter = boardRVadapter
+        boardRVAdapter = BoardListLVAdapter(boardDataList)
+        binding.boardListView.adapter = boardRVAdapter
 
         binding.writeBtn.setOnClickListener{
             val intent = Intent(context, BoardWriteActivity::class.java)
@@ -64,41 +68,43 @@ class TalkFragment : Fragment() {
             it.findNavController().navigate(R.id.action_talkFragment_to_storeFragment)
         }
 
+        getFBBoardData()
+
         return binding.root
     }
 
-//    private fun getFBBoardData(){
-//
-//        val postListener = object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                boardDataList.clear()
-//
-//                for (dataModel in dataSnapshot.children) {
-//
-//                    Log.d(TAG, dataModel.toString())
-////                    dataModel.key
-//
-//                    val item = dataModel.getValue(BoardModel::class.java)
-//                    boardDataList.add(item!!)
-//                    boardKeyList.add(dataModel.key.toString())
-//
-//                }
-//                boardKeyList.reverse()
-//                boardDataList.reverse()
-//                boardRVAdapter.notifyDataSetChanged()
-//
-//                Log.d(TAG, boardDataList.toString())
-//
-//
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-//            }
-//        }
-//        FBRef.boardRef.addValueEventListener(postListener)
-//
-//    }
+    private fun getFBBoardData(){
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                boardDataList.clear()
+
+                for (dataModel in dataSnapshot.children) {
+
+                    Log.d(TAG, dataModel.toString())
+//                    dataModel.key
+
+                    val item = dataModel.getValue(BoardModel::class.java)
+                    boardDataList.add(item!!)
+                    //boardKeyList.add(dataModel.key.toString())
+
+                }
+               // boardKeyList.reverse()
+                boardDataList.reverse()
+                boardRVAdapter.notifyDataSetChanged()
+
+                Log.d(TAG, boardDataList.toString())
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FBRef.boardRef.addValueEventListener(postListener)
+
+    }
 }
