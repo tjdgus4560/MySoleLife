@@ -111,7 +111,7 @@ class TalkFragment : Fragment() {
                     Log.d(TAG,"key")
 
                 }
-               // boardKeyList.reverse()
+                boardKeyList.reverse()
                 boardDataList.reverse()
                 boardRVAdapter.notifyDataSetChanged()
 

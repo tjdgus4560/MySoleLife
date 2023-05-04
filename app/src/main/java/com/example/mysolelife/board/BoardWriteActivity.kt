@@ -15,6 +15,7 @@ import com.example.mysolelife.databinding.ActivityBoardWriteBinding
 import com.example.mysolelife.utils.FBAuth
 import com.example.mysolelife.utils.FBRef
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
 
 class BoardWriteActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class BoardWriteActivity : AppCompatActivity() {
     private val TAG = BoardWriteActivity::class.java.simpleName
 
     private var isImageUpload = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -53,9 +55,12 @@ class BoardWriteActivity : AppCompatActivity() {
 
             Toast.makeText(this, "게시글 입력 완료", Toast.LENGTH_LONG).show()
 
-//            if(isImageUpload == true) {
-//                imageUpload(key)
-//            }
+
+
+
+            if(isImageUpload == true) {
+                imageUpload(key)
+            }
 
             finish()
 
@@ -70,30 +75,32 @@ class BoardWriteActivity : AppCompatActivity() {
 
     }
 
-//    private fun imageUpload(key : String){
-//        // Get the data from an ImageView as bytes
-//
-//        val storage = Firebase.storage
-//        val storageRef = storage.reference
-//        val mountainsRef = storageRef.child(key + ".png")
-//
-//        val imageView = binding.imageArea
-//        imageView.isDrawingCacheEnabled = true
-//        imageView.buildDrawingCache()
-//        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-//        val baos = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-//        val data = baos.toByteArray()
-//
-//        var uploadTask = mountainsRef.putBytes(data)
-//        uploadTask.addOnFailureListener {
-//            // Handle unsuccessful uploads
-//        }.addOnSuccessListener { taskSnapshot ->
-//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-//            // ...
-//        }
-//
-//    }
+
+
+    private fun imageUpload(key : String){
+        // Get the data from an ImageView as bytes
+
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+        val mountainsRef = storageRef.child(key + ".png")
+
+        val imageView = binding.imageArea
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = mountainsRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+        }
+
+    }
 
 
 

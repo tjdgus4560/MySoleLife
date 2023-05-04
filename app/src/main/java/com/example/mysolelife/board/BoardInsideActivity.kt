@@ -15,6 +15,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+
 //import com.google.firebase.storage.ktx.storage
 
 class BoardInsideActivity : AppCompatActivity() {
@@ -41,32 +43,32 @@ class BoardInsideActivity : AppCompatActivity() {
         // 두번째 방법
         val key = intent.getStringExtra("key")
         getBoardData(key.toString())
-        //getImageData(key.toString())
+        getImageData(key.toString())
 
     }
 
-//    private fun getImageData(key : String){
-//
-//        // Reference to an image file in Cloud Storage
-//        val storageReference = Firebase.storage.reference.child(key + ".png")
-//
-//        // ImageView in your Activity
-//        val imageViewFromFB = binding.getImageArea
-//
-//        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
-//            if(task.isSuccessful) {
-//
-//                Glide.with(this)
-//                    .load(task.result)
-//                    .into(imageViewFromFB)
-//
-//            } else {
-//
-//            }
-//        })
-//
-//
-//    }
+    private fun getImageData(key : String){
+
+        // Reference to an image file in Cloud Storage
+        val storageReference = Firebase.storage.reference.child(key + ".png")
+
+        // ImageView in your Activity
+        val imageViewFromFB = binding.getImageArea
+
+        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
+            if(task.isSuccessful) {
+
+                Glide.with(this)
+                    .load(task.result)
+                    .into(imageViewFromFB)
+
+            } else {
+
+            }
+        })
+
+
+    }
 
 
     private fun getBoardData(key : String){
