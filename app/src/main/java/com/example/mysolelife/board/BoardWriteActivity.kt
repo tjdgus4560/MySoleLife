@@ -26,6 +26,8 @@ class BoardWriteActivity : AppCompatActivity() {
 
     private var isImageUpload = false
 
+    val storage = Firebase.storage
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
